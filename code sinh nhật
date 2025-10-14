@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Chúc mừng Sinh nhật Tuyệt vời! 🎂</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* ------------------ CSS CHUNG ------------------ */
+        :root {
+            --primary-color: #e91e63; /* Hồng đậm */
+            --secondary-color: #4a148c; /* Tím đậm */
+            --background-color: #fce4ec; /* Hồng phấn */
+            --button-color: #f44336; /* Đỏ */
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--background-color);
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 2s ease-out;
+            max-width: 90%;
+            width: 550px;
+            box-sizing: border-box;
+            transition: opacity 0.5s; /* Để ẩn/hiện mượt mà */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: clamp(2.5em, 5vw, 3.5em);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .birthday-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        .birthday-image:hover {
+            transform: scale(1.03);
+        }
+
+        .birthday-button {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ------------------ HIỆU ỨNG TRÁI TIM LƠ LỬNG ------------------ */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            transform: rotate(-45deg);
+            opacity: 0;
+            pointer-events: none;
+            animation: floatUp 8s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { left: 10px; top: 0; }
+
+        @keyframes floatUp {
+            0% { transform: translate(0, 0) scale(0.5) rotate(-45deg); opacity: 0.8; }
+            20% { opacity: 1; }
+            100% { transform: translate(var(--x-offset), -100vh) scale(1.2) rotate(-45deg); opacity: 0; }
+        }
+
+        /* ------------------ MÀN HÌNH BÍ MẬT NÂNG CẤP ------------------ */
+        .secret-message-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+            cursor: pointer; /* Cho biết có thể nhấn để đóng */
+        }
+
+        .secret-message-box.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .secret-message-box h3 {
+            font-size: clamp(2em, 5vw, 4em);
+            color: #ffd700; /* Vàng kim */
+            margin-bottom: 20px;
+            animation: zoomIn 1s forwards;
+            text-align: center;
+        }
+        
+        .secret-message-box p {
+            font-size: clamp(1.2em, 3vw, 2em);
+            max-width: 80%;
+            line-height: 1.5;
+            animation: slideUp 1.5s forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
+            text-align: center;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* ------------------ Responsive ------------------ */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>💖 Chúc Mừng Sinh Nhật Ngọt Ngào! 🎂</h1>
+        <h2 id="" style="color: var(--secondary-color); margin-bottom: 25px;">vợ anh💖 !</h2>
+        
+        <img src="index/f3cf668b-8cc0-49c9-8862-6e582f575b08.jpg" 
+             alt="Hình ảnh chúc mừng sinh nhật" 
+             class="birthday-image">
+        
+        <p class="message" style="color: #6a1b9a; font-style: italic; line-height: 1.6;">
+            💖Mỗi ngày trôi qua đều là một món quà, và ngày hôm nay đặc biệt hơn cả. 
+            Chúc em một tuổi mới bình an, hạnh phúc và gặt hái nhiều thành công!💖
+        </p>
+        
+        <button class="birthday-button" onclick="hienThiLoiChuc()">Mở lời chúc **SIÊU** bí mật!</button>
+    </div>
+
+    <div id="secret-message-box" class="secret-message-box" onclick="closeSecretMessage()">
+        <h3>💌 Lời Chúc Đặc Biệt Đã Được Kích Hoạt! 🔑</h3>
+        <p>
+            💖Không chỉ là một lời chúc, đây là một lời hứa: chúc em một tuổi mới  đầy trọn vẹn 
+         làm gì cững phải suy nghĩ nhé nhớ phải ngoan nghe chưa"💖
+            <br><br>
+            💖Hãy tận hưởng ngày của em thật trọn vẹn!💖
+            💖anh sẽ luôn bên cạnh em yêu em nhiều lắm💖 
+            <br>
+            <span style="font-size: 0.8em; opacity: 0.7;">(Nhấn vào bất cứ đâu để trở về trang chính)</span>
+        </p>
+    </div>
+
+    <script>
+        
+        const TEN_NGUOI_NHAN = "NGƯỜI YÊU"; // <<<<< THAY TÊN Ở ĐÂY
+        const HEART_COLORS = ['#ff69b4', '#ffc0cb', '#ff1493', '#e91e63', '#ff007f'];
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cập nhật tên người nhận
+            document.getElementById('recipient-name').textContent = `Dành tặng ${TEN_NGUOI_NHAN} yêu quý!`;
+
+            // 1. Kích hoạt Confetti khi trang tải
+            confetti({
+                particleCount: 150,
+                spread: 120,
+                origin: { y: 0.6 }
+            });
+
+            // 2. Tạo hiệu ứng trái tim lơ lửng
+            const body = document.body;
+            const numHearts = 30; 
+
+            for (let i = 0; i < numHearts; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Đặt màu ngẫu nhiên cho trái tim và các phần tử giả
+                const color = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
+                heart.style.backgroundColor = color;
+                heart.style.setProperty('background-color', color); 
+
+                // Vị trí và delay ngẫu nhiên
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDelay = `${Math.random() * -8}s`; 
+                heart.style.setProperty('--x-offset', `${(Math.random() - 0.5) * 200}px`);
+
+                body.appendChild(heart);
+            }
+        });
+
+        function hienThiLoiChuc() {
+            const nut = document.querySelector('.birthday-button');
+            const secretBox = document.getElementById('secret-message-box');
+            const mainContainer = document.querySelector('.container');
+
+            // 1. Vô hiệu hóa và thay đổi nút
+            nut.textContent = "Lời chúc đang được mở...";
+            nut.disabled = true;
+            nut.style.backgroundColor = '#ccc';
+            nut.style.cursor = 'default';
+            nut.style.boxShadow = 'none';
+            
+            // 2. Kích hoạt Confetti bùng nổ
+            confetti({
+                particleCount: 300,
+                spread: 180,
+                origin: { y: 0.5 }
+            });
+
+            // 3. Ẩn container chính và hiển thị màn hình bí mật sau 1 giây
+            mainContainer.style.opacity = '0';
+            setTimeout(() => {
+                secretBox.classList.add('show');
+            }, 500); // Đợi 0.5 giây cho container mờ đi
+        }
+
+        function closeSecretMessage() {
+            // Cho phép người dùng nhấn vào bất cứ đâu để đóng lời chúc
+            const secretBox = document.getElementById('secret-message-box');
+            const mainContainer = document.querySelector('.container');
+            
+            secretBox.classList.remove('show');
+            
+            // Hiện lại container chính
+            mainContainer.style.opacity = '1';
+
+            // Kích hoạt một Confetti nhẹ khi trở về
+            confetti({
+                particleCount: 80,
+                spread: 60,
+                origin: { y: 0.8 }
+            });
+        }
+    </script>
+    
+</body>
+</html>
